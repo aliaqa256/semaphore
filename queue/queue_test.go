@@ -7,7 +7,7 @@ import (
 
 // benchmarking
 func BenchmarkQueue(b *testing.B) {
-	seq := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	seq := []int{1, 2, 3}
 	q := Queue{}
 	for _,seq := range seq {
 		b.Run(fmt.Sprintf("Queue-%d", seq), func(b *testing.B) {
@@ -24,14 +24,15 @@ func BenchmarkQueue(b *testing.B) {
 // TestQueue tests the queue
 func BenchmarkDequeue(b *testing.B) {
 	q := Queue{}
-	for i := 0; i < b.N; i++ {
+	for i := 0; i < 71396013; i++ {
 		q.Enqueue(i)
 	}
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		q.Dequeue()
 	}
 }
-
+// go  test  ./queue  -run=xxxx -v  -bench=.  benchtime3s -benchmem 
 
 
 
