@@ -19,18 +19,17 @@ func main() {
 	signal.Notify(sigs, os.Interrupt, syscall.SIGTERM)
 	q := queue.Queue{}
 	ctx := context.Background()
-	count := 10
+	count := 500
 	sem := semaphore.NewWeighted(int64(count))
 
 	for i := 0; i < 2; i++ {
-
 		go func() {
 			a := 0
 			for {
 				sem.Acquire(ctx, 1)
 				q.Enqueue(a)
 				a++
-				time.Sleep(time.Duration(rand.Intn(500)+100) * time.Millisecond)
+				// time.Sleep(time.Duration(rand.Intn(500)+100) * time.Millisecond)
 
 				// if signal was received, exit
 				select {
@@ -51,7 +50,7 @@ func main() {
 				if out == -1 {
 					continue
 				}
-				time.Sleep(time.Duration(rand.Intn(500)+100) * time.Millisecond)
+				// time.Sleep(time.Duration(rand.Intn(500)+100) * time.Millisecond)
 				sem.Release(1)
 				fmt.Println(out, i)
 
